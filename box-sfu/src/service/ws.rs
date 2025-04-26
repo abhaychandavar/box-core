@@ -61,7 +61,6 @@ pub mod ws {
                     conn_manager.ping_connection(&connection_id).await;
                     let last_pong_time_clone = last_pong_time.clone();
                     sleep(Duration::from_secs(5));
-                    // Lock the mutex to safely access the SystemTime
                     let last_pong_time_lock = last_pong_time_clone.lock().await;
                     if let Ok(elapsed) = last_pong_time_lock.elapsed() {
                         if elapsed > Duration::from_secs(*config::app::PING_INTERVAL_SECS) {
