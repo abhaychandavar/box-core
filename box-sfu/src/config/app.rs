@@ -20,3 +20,10 @@ pub static PING_INTERVAL_SECS: Lazy<u64> = Lazy::new(|| {
         .unwrap_or(10)  // Default to 10 if parsing fails
 });
 
+pub static PING_ELAPSED_SECS: Lazy<u64> = Lazy::new(|| {
+    env::var("PING_ELAPSED_SECS")
+    .unwrap_or_else(|_| "10".to_string())
+    .parse::<u64>()
+    .unwrap_or(10)
+});
+

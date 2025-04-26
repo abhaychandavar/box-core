@@ -60,10 +60,10 @@ pub mod ws {
                     let conn_manager = ConnectionManager::instance();
                     conn_manager.ping_connection(&connection_id).await;
                     let last_pong_time_clone = last_pong_time.clone();
-                    sleep(Duration::from_secs(5));
+                    sleep(Duration::from_secs(*config::app::PING_INTERVAL_SECS));
                     let last_pong_time_lock = last_pong_time_clone.lock().await;
                     if let Ok(elapsed) = last_pong_time_lock.elapsed() {
-                        if elapsed > Duration::from_secs(*config::app::PING_INTERVAL_SECS) {
+                        if elapsed > Duration::from_secs(*config::app::PING_ELAPSED_SECS) {
                             handle_connection_termination(connection_id.clone()).await;
                             return;
                         }
